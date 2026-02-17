@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pbs-catalog-service-deploy
+  labels:
+    app: pbs-catalog-service-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pbs-catalog-service-pod
+  template:
+    metadata:
+      labels:
+        app: pbs-catalog-service-pod
+    spec:
+      containers:
+        - name: pbs-catalog-service
+          image: compotapp/pbs-catalog-service:0.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9001
+
+#kubectl apply -f k8s/manifest/catalog-service-deploy.yaml

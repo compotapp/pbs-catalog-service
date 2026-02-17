@@ -1,0 +1,75 @@
+#name: Commit Stage
+#on: push
+#
+#jobs:
+#  build:
+#    name: Build and Test
+#    runs-on: ubuntu-22.04
+#    permissions:
+#      contents: read
+#      security-events: write
+#    steps:
+#      - name: Checkout source code
+#        uses: actions/checkout@v3
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: temurin
+#          java-version: 17
+#          cache: maven
+#
+#
+##jobs:
+##build: ❶
+##name: Build and Test ❷
+##runs-on: ubuntu-22.04 ❸
+##permissions: ❹
+##contents: read ❺
+##security-events: write ❻
+##steps:
+##  - name: Checkout source code
+##uses: actions/checkout@v3 ❶
+##  - name: Set up JDK
+##uses: actions/setup-java@v3 ❷
+##with: ❸
+##distribution: temurin
+##java-version: 17
+##cache: gradle
+##  - name: Code vulnerability scanning
+##uses: anchore/scan-action@v3 ❹
+##id: scan ❺
+##with:
+##path: "${{ github.workspace }}" ❻
+##fail-build: false ❼
+##severity-cutoff: high ❽
+##acs-report-enable: true ❾
+##  - name: Upload vulnerability report
+##uses: github/codeql-action/upload-sarif@v2 ❿
+##if: success() || failure() ⓫
+##with:
+##sarif_file: ${{ steps.scan.outputs.sarif }} ⓬
+##  - name: Build, unit tests and integration tests
+##run: |
+##  chmod +x gradlew ⓭
+##  ./gradlew build
+#
+##❶ Уникальный идентификатор вакансии
+##❷ Тип машины, на которой должно выполняться
+##❸ задание. Понятное имя задания.
+##❹ Разрешения, предоставленные заданию. Разрешение на
+##❺ проверку текущего репозитория Git. Разрешение на
+##❻ отправку событий безопасности в GitHub.
+##❶ Проверяет текущий репозиторий Git (служба-каталог). Устанавливает
+##❷ и настраивает среду выполнения Java.
+##❸ Определяет, какую версию, дистрибутив и тип кэша использовать. Сканирует
+##❹ кодовую базу на наличие уязвимостей с помощью grype.
+##❺ Присваивает идентификатор текущему шагу, чтобы на него можно было ссылаться в последующих шагах.
+##❻ Путь к извлеченному репозиторию.
+##❼ Следует ли завершать сборку в случае уязвимостей безопасности
+##❽ Минимальная категория безопасности, которую следует считать ошибкой (низкая, средняя, высокая,
+##❾ критическая). Включить ли формирование отчета после завершения сканирования.
+##❿ Загружает отчет об уязвимостях безопасности на GitHub (формат SARIF).
+##⓫ Загружает отчет, даже если предыдущий шаг не удался.
+##⓬ Извлекает отчет из результатов предыдущего шага.
+##⓭ Обеспечивает исполняемость оболочки Gradle, устраняя проблемы несовместимости с Windows.
+##⓮ Запускает задачу сборки Gradle, которая компилирует кодовую базу и запускает модульные и интеграционные тесты.
